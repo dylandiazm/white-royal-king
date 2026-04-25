@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>White Royal King</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200;300;400;600&family=Noto+Sans+KR:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --korean-blue: #003478;
+            --korean-blue-light: #1A4B8C;
+            --korean-blue-dark: #002254;
+            --silver: #C8D0DA;
+            --silver-mid: #9BAABB;
+            --silver-dark: #6B7A8D;
+            --silver-shine: #E8EDF4;
+            --ink: #FFFFFF;
+            --ink-soft: #F8FAFC;
+            --ink-mid: #EDF2F7;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background: var(--ink);
+            color: var(--silver-shine);
+            overflow-x: hidden;
+        }
+
+        body {
+            background: linear-gradient(180deg, #FFFFFF 0%, #F0F5FA 50%, #E8EDF4 100%);
+        }
+
+        .font-kr {
+            font-family: 'Noto Serif KR', serif;
+        }
+
+        .font-serif {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .text-silver-grad {
+            background: linear-gradient(135deg, #003478 0%, #1A4B8C 40%, #003478 70%, #002254 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .grain::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            backdrop-filter: blur(20px) saturate(160%);
+            background: rgba(255, 255, 255, 0.95);
+            border-bottom: 2px solid var(--korean-blue);
+        }
+
+        .hero-wrap {
+            background: linear-gradient(165deg, #FFFFFF 0%, #F4F8FC 40%, #E8EDF4 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-wrap::before {
+            content: '';
+            position: absolute;
+            width: 700px;
+            height: 700px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(0, 52, 120, .15) 0%, transparent 70%);
+            top: -150px;
+            right: -150px;
+            pointer-events: none;
+        }
+
+        .hangul-bg {
+            position: absolute;
+            font-family: 'Noto Serif KR', serif;
+            font-weight: 200;
+            color: rgba(0, 52, 120, 0.06);
+            pointer-events: none;
+            user-select: none;
+            line-height: 1;
+        }
+
+        .sep {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .sep-line {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(200, 208, 218, .4), transparent);
+        }
+
+        .sep-diamond {
+            width: 5px;
+            height: 5px;
+            transform: rotate(45deg);
+            background: var(--silver-mid);
+            flex-shrink: 0;
+        }
+
+        .card {
+            background: linear-gradient(145deg, #FFFFFF, #F8FAFC);
+            border: 1px solid rgba(0, 52, 120, 0.1);
+            box-shadow: 0 4px 20px rgba(0, 52, 120, 0.08);
+            transition: transform .4s cubic-bezier(.25, .46, .45, .94), border-color .4s, box-shadow .4s;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            border-color: var(--korean-blue);
+            box-shadow: 0 30px 70px rgba(0, 52, 120, 0.15), 0 0 30px rgba(0, 52, 120, .1);
+        }
+
+        .badge-silver {
+            background: linear-gradient(135deg, #003478, #002254);
+            color: #FFFFFF;
+            font-size: .6rem;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+            padding: 3px 10px;
+            border-radius: 2px;
+        }
+
+        .btn-silver {
+            background: linear-gradient(135deg, #003478, #002254);
+            color: #FFFFFF;
+            font-family: 'Noto Sans KR', sans-serif;
+            font-weight: 500;
+            font-size: .72rem;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+            transition: all .3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-silver::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, #1A4B8C, #003478);
+            opacity: 0;
+            transition: opacity .3s;
+        }
+
+        .btn-silver:hover::before {
+            opacity: 1;
+        }
+
+        .btn-silver span {
+            position: relative;
+        }
+
+        .btn-outline {
+            border: 1px solid var(--korean-blue);
+            color: var(--korean-blue);
+            font-family: 'Noto Sans KR', sans-serif;
+            font-size: .72rem;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+            transition: all .3s ease;
+        }
+
+        .btn-outline:hover {
+            border-color: var(--korean-blue-light);
+            background: rgba(0, 52, 120, .08);
+            color: var(--korean-blue-light);
+        }
+
+        @keyframes shimmer {
+            0% {
+                background-position: -200% center;
+            }
+
+            100% {
+                background-position: 200% center;
+            }
+        }
+
+        .shimmer-text {
+            background: linear-gradient(90deg, #002254 0%, #003478 30%, #1A4B8C 60%, #003478 100%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: shimmer 4s linear infinite;
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity .7s ease, transform .7s ease;
+        }
+
+        .revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(32px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fu {
+            opacity: 0;
+            animation: fadeUp .9s ease forwards;
+        }
+
+        .fu1 {
+            animation-delay: .1s;
+        }
+
+        .fu2 {
+            animation-delay: .28s;
+        }
+
+        .fu3 {
+            animation-delay: .46s;
+        }
+
+        .fu4 {
+            animation-delay: .64s;
+        }
+
+        .fu5 {
+            animation-delay: .82s;
+        }
+
+        @keyframes floatA {
+
+            0%,
+            100% {
+                transform: translateY(0) scale(1);
+            }
+
+            50% {
+                transform: translateY(-18px) scale(1.03);
+            }
+        }
+
+        @keyframes floatB {
+
+            0%,
+            100% {
+                transform: translateY(0) rotate(0deg);
+            }
+
+            50% {
+                transform: translateY(-12px) rotate(3deg);
+            }
+        }
+
+        .float-a {
+            animation: floatA 7s ease-in-out infinite;
+        }
+
+        .float-b {
+            animation: floatB 9s ease-in-out infinite;
+        }
+
+        .img-silver-frame {
+            position: relative;
+        }
+
+        .img-silver-frame::before {
+            content: '';
+            position: absolute;
+            top: -8px;
+            left: -8px;
+            right: 8px;
+            bottom: 8px;
+            border: 1px solid rgba(0, 52, 120, .2);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .testi {
+            background: linear-gradient(145deg, #FFFFFF, #F8FAFC);
+            border: 1px solid rgba(0, 52, 120, 0.08);
+            border-left: 3px solid var(--korean-blue);
+        }
+
+        .wa {
+            position: fixed;
+            bottom: 28px;
+            right: 28px;
+            z-index: 200;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: #25D366;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 24px rgba(37, 211, 102, .35);
+            transition: transform .3s, box-shadow .3s;
+        }
+
+        .wa:hover {
+            transform: scale(1.12);
+            box-shadow: 0 12px 32px rgba(37, 211, 102, .5);
+        }
+
+        .kr-subtitle {
+            font-family: 'Noto Serif KR', serif;
+            font-weight: 200;
+            font-size: .85rem;
+            color: var(--silver-dark);
+            letter-spacing: .06em;
+        }
+
+        .include-item {
+            background: linear-gradient(145deg, #FFFFFF, #F5F8FA);
+            border: 1px solid rgba(0, 52, 120, 0.08);
+            transition: border-color .3s, background .3s;
+        }
+
+        .include-item:hover {
+            border-color: var(--korean-blue);
+            background: linear-gradient(145deg, #FFFFFF, #F0F5FA);
+        }
+
+        @keyframes marquee {
+            from {
+                transform: translateX(0);
+            }
+
+            to {
+                transform: translateX(-50%);
+            }
+        }
+
+        .marquee-track {
+            display: flex;
+            animation: marquee 22s linear infinite;
+            width: max-content;
+        }
+
+        .geo-deco {
+            position: absolute;
+            border: 1px solid rgba(0, 52, 120, 0.08);
+            border-radius: 2px;
+            pointer-events: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- WhatsApp -->
+    <a href="https://wa.me/51953631425" target="_blank" class="wa" title="WhatsApp" style="background:#25D366;">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="white">
+            <path
+                d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+        </svg>
+    </a>
+
+    <!-- NAVBAR -->
+    <nav class="navbar py-4 px-6 md:px-14">
+        <div class="max-w-6xl mx-auto flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <svg width="36" height="36" viewBox="0 0 36 36">
+                    <circle cx="18" cy="18" r="17" fill="none" stroke="url(#sg)" stroke-width="1" />
+                    <circle cx="18" cy="18" r="5" fill="none" stroke="url(#sg)" stroke-width=".8" opacity=".6" />
+                    <line x1="18" y1="1" x2="18" y2="35" stroke="url(#sg)" stroke-width=".5" opacity=".4" />
+                    <defs>
+                        <linearGradient id="sg" x1="0" y1="0" x2="1" y2="1">
+                            <stop offset="0%" stop-color="#E8EDF4" />
+                            <stop offset="100%" stop-color="#6B7A8D" />
+                        </linearGradient>
+                    </defs>
+                </svg>
+                <div>
+                    <div class="font-kr font-light tracking-widest text-base shimmer-text">WHITE ROYAL KING</div>
+                    <div class="kr-subtitle" style="font-size:.58rem;letter-spacing:.22em;">포메라니안 · Lima, Perú</div>
+                </div>
+            </div>
+            <div class="hidden md:flex items-center gap-8 text-xs tracking-widest uppercase"
+                style="color:var(--silver-dark)">
+                <a href="#cachorros" class="hover:text-white transition-colors">Cachorros</a>
+                <a href="#origen" class="hover:text-white transition-colors">Origen</a>
+                <a href="#galeria" class="hover:text-white transition-colors">Galería</a>
+                <a href="#contacto" class="hover:text-white transition-colors">Contacto</a>
+            </div>
+            <a href="https://wa.me/51953631425" target="_blank"
+                class="btn-silver px-5 py-2.5 rounded-sm inline-block"><span>Consultar</span></a>
+        </div>
+    </nav>
+
+
+    <!-- HERO -->
+    <section class="hero-wrap grain min-h-screen flex items-center pt-20 relative">
+        <div class="hangul-bg" style="font-size:220px;top:-30px;right:-20px;">왕</div>
+        <div class="hangul-bg" style="font-size:130px;bottom:60px;left:3%;">포메</div>
+        <div class="geo-deco" style="width:80px;height:80px;top:18%;right:12%;transform:rotate(15deg);"></div>
+        <div class="geo-deco" style="width:40px;height:40px;top:22%;right:14%;transform:rotate(30deg);opacity:.5;">
+        </div>
+        <div class="geo-deco" style="width:120px;height:120px;bottom:15%;left:6%;transform:rotate(-10deg);"></div>
+
+        <div class="max-w-6xl mx-auto px-6 md:px-14 w-full grid md:grid-cols-2 gap-12 items-center py-24 relative z-10">
+            <div>
+                <div class="fu fu1 flex items-center gap-3 mb-8">
+                    <div class="w-6 h-px" style="background:var(--silver-mid);"></div>
+                    <span class="font-kr text-xs tracking-widest" style="color:var(--silver-mid);">한국 포메라니안 · Origen
+                        Coreano</span>
+                </div>
+                <h1 class="fu fu2 font-kr font-light leading-none mb-2 shimmer-text"
+                    style="font-size:clamp(2.8rem,6vw,5.5rem);">White</h1>
+                <h1 class="fu fu3 font-kr font-light leading-none mb-2 shimmer-text"
+                    style="font-size:clamp(2.8rem,6vw,5.5rem);">Royal</h1>
+                <h1 class="fu fu4 font-kr font-semibold leading-none mb-8 shimmer-text"
+                    style="font-size:clamp(2.8rem,6vw,5.5rem);">King</h1>
+                <div class="fu fu4 font-kr text-lg mb-5" style="color:var(--korean-blue);font-weight:400;">화이트 로열 킹
+                </div>
+                <p class="fu fu4 text-sm leading-relaxed mb-10 max-w-md"
+                    style="color:var(--korean-blue-light);font-weight:400;">
+                    Cachorros Pomerania de línea coreana, criados con el estándar de los mejores
+                    <em style="color:var(--silver);">kennels de Corea del Sur</em>.
+                    Padres importados, pedigree certificado y el amor que merecen.
+                </p>
+                <div class="fu fu5 flex flex-wrap gap-4">
+                    <a href="#cachorros" class="btn-silver px-8 py-3.5 rounded-sm inline-block"><span>Ver
+                            cachorros</span></a>
+                    <a href="#origen" class="btn-outline px-8 py-3.5 rounded-sm inline-block">Origen coreano</a>
+                </div>
+                <div class="fu fu5 flex gap-10 mt-14">
+                    <div>
+                        <div class="font-kr shimmer-text" style="font-size:2.6rem;font-weight:200;">12+</div>
+                        <div class="text-xs tracking-wider uppercase mt-1" style="color:var(--silver-dark)">Años criando
+                        </div>
+                    </div>
+                    <div class="w-px" style="background:rgba(200,208,218,.15)"></div>
+                    <div>
+                        <div class="font-kr shimmer-text" style="font-size:2.6rem;font-weight:200;">500+</div>
+                        <div class="text-xs tracking-wider uppercase mt-1" style="color:var(--silver-dark)">Familias
+                            felices</div>
+                    </div>
+                    <div class="w-px" style="background:rgba(200,208,218,.15)"></div>
+                    <div>
+                        <div class="font-kr shimmer-text" style="font-size:2.6rem;font-weight:200;">100%</div>
+                        <div class="text-xs tracking-wider uppercase mt-1" style="color:var(--silver-dark)">Pura raza
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="relative fu fu3">
+                <div class="absolute inset-0 rounded-full float-a"
+                    style="background:radial-gradient(circle,rgba(0,52,120,.12) 0%,transparent 70%);transform:scale(1.3);">
+                </div>
+                <div class="img-silver-frame rounded-2xl overflow-hidden relative float-b">
+                    <img src="assets/img5.jpeg" alt="Cachorro Pomerania White Royal King"
+                        class="w-full h-auto object-cover block" style="filter:brightness(.92) contrast(1.05);"
+                        onerror="this.src='https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=700'" />
+                    <div class="absolute top-4 left-4"
+                        style="background:rgba(255,255,255,.95);backdrop-filter:blur(10px);padding:8px 14px;border-radius:3px;border:1px solid var(--korean-blue)">
+                        <div class="font-kr text-xs tracking-widest" style="color:var(--korean-blue);">지금 이용 가능</div>
+                        <div class="text-xs tracking-widest" style="color:var(--korean-blue-light);">Disponibles ahora
+                        </div>
+                    </div>
+                    <div class="absolute bottom-0 left-0 right-0 p-5"
+                        style="background:linear-gradient(to top,rgba(255,255,255,.95),transparent)">
+                        <div class="font-kr font-light text-lg" style="color:var(--korean-blue);">한국 포메라니안</div>
+                        <div class="text-xs tracking-wide mt-1" style="color:var(--korean-blue-light);">Vacunado ·
+                            Microchip ·
+                            Pedigree FCI</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- MARQUEE -->
+    <div class="py-4 overflow-hidden"
+        style="background:#003478;border-top:1px solid rgba(0,52,120,.1);border-bottom:1px solid rgba(0,52,120,.1);">
+        <div class="marquee-track">
+            <span class="font-kr text-xs tracking-widest px-8" style="color:#FFFFFF;">화이트 로열 킹</span>
+            <span class="sep-diamond mx-4" style="background:rgba(255,255,255,.5);"></span>
+            <span class="text-xs tracking-widest px-8" style="color:#FFFFFF;">ORIGEN COREANO</span>
+            <span class="sep-diamond mx-4" style="background:rgba(255,255,255,.5);"></span>
+            <span class="text-xs tracking-widest px-8" style="color:#FFFFFF;">PEDIGREE FCI CERTIFICADO</span>
+            <span class="sep-diamond mx-4" style="background:rgba(255,255,255,.5);"></span>
+            <span class="font-kr text-xs tracking-widest px-8" style="color:#FFFFFF;">포메라니안 최고의 품질</span>
+            <span class="sep-diamond mx-4" style="background:rgba(255,255,255,.5);"></span>
+            <span class="text-xs tracking-widest px-8" style="color:#FFFFFF;">LIMA · PERÚ</span>
+            <span class="sep-diamond mx-4" style="background:rgba(255,255,255,.5);"></span>
+            <span class="text-xs tracking-widest px-8" style="color:#FFFFFF;">VACUNADO & MICROCHIP</span>
+            <span class="sep-diamond mx-4" style="background:rgba(255,255,255,.5);"></span>
+            <span class="font-kr text-xs tracking-widest px-8" style="color:#FFFFFF;">화이트 로열 킹</span>
+            <span class="sep-diamond mx-4" style="background:rgba(255,255,255,.5);"></span>
+            <span class="text-xs tracking-widest px-8" style="color:#FFFFFF;">ORIGEN COREANO</span>
+            <span class="sep-diamond mx-4" style="background:rgba(255,255,255,.5);"></span>
+            <span class="text-xs tracking-widest px-8" style="color:#FFFFFF;">PEDIGREE FCI CERTIFICADO</span>
+            <span class="sep-diamond mx-4" style="background:rgba(255,255,255,.5);"></span>
+            <span class="font-kr text-xs tracking-widest px-8" style="color:#FFFFFF;">포메라니안 최고의 품질</span>
+            <span class="sep-diamond mx-4" style="background:rgba(255,255,255,.5);"></span>
+            <span class="text-xs tracking-widest px-8" style="color:#FFFFFF;">LIMA · PERÚ</span>
+            <span class="sep-diamond mx-4" style="background:rgba(255,255,255,.5);"></span>
+            <span class="text-xs tracking-widest px-8" style="color:#FFFFFF;">VACUNADO & MICROCHIP</span>
+            <span class="sep-diamond mx-4" style="background:rgba(255,255,255,.5);"></span>
+        </div>
+    </div>
+
+
+    <!-- ORIGEN COREANO -->
+    <section id="origen" class="py-28 px-6 md:px-14 relative overflow-hidden">
+        <div class="hangul-bg" style="font-size:300px;top:50%;left:50%;transform:translate(-50%,-50%);">서울</div>
+        <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-16 items-center">
+            <div class="reveal order-2 md:order-1">
+                <div class="img-silver-frame rounded-xl overflow-hidden">
+                    <img src="assets/img8.jpeg" class="w-full h-96 object-cover"
+                        style="filter:brightness(.88) saturate(.9);"
+                        onerror="this.src='https://images.unsplash.com/photo-1588943211346-0908a1fb0b01?w=700'"
+                        alt="Pomerania Coreano" />
+                </div>
+                <div class="relative -mt-16 ml-8 z-10">
+                    <div class="card rounded-lg p-5 max-w-xs">
+                        <div class="font-kr text-3xl font-light mb-1 shimmer-text">서울</div>
+                        <div class="text-xs tracking-widest uppercase mb-3" style="color:var(--silver-dark)">Seoul ·
+                            Corea del Sur</div>
+                        <p class="text-xs leading-relaxed" style="color:var(--silver-dark);">Centro mundial de crianza
+                            Pomerania de alta competición y exhibición.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="reveal order-1 md:order-2">
+                <div class="sep mb-6" style="max-width:260px;">
+                    <div class="sep-diamond"></div>
+                    <div class="sep-line flex-1"></div>
+                    <div class="text-xs tracking-widest uppercase" style="color:var(--silver-mid);">Origen</div>
+                </div>
+                <div class="font-kr font-light mb-2" style="font-size:1.1rem;color:var(--silver-dark);">한국에서 온 최고의 포메라니안
+                </div>
+                <h2 class="font-serif text-4xl md:text-5xl font-normal mb-6 shimmer-text">El
+                    estándar<br /><em>coreano.</em></h2>
+                <p class="text-sm leading-relaxed mb-5" style="color:var(--korean-blue-light);">
+                    Corea del Sur lidera el mundo en crianza de Pomerania de <strong
+                        style="color:var(--korean-blue);">tipo
+                        fox coreano</strong>: cabeza redonda, hocico corto, ojos grandes expresivos y pelaje denso de
+                    ángel. Un estándar refinado durante décadas en los mejores kennels de Seúl y Busan.
+                </p>
+                <p class="text-sm leading-relaxed mb-10" style="color:var(--korean-blue-light);">
+                    En <strong style="color:var(--korean-blue);">White Royal King</strong> trabajamos directamente con
+                    reproductores importados de Corea, manteniendo el fenotipo auténtico que hace al Pomerania coreano
+                    el más buscado del mundo.
+                </p>
+                <div class="grid grid-cols-2 gap-3">
+                    <div class="include-item rounded-lg p-4">
+                        <div class="font-kr text-sm mb-1" style="color:var(--korean-blue);">서울 스타일</div>
+                        <div class="text-xs" style="color:var(--korean-blue-light);">Cara redonda, ojos expresivos —
+                            fenotipo
+                            Seoul</div>
+                    </div>
+                    <div class="include-item rounded-lg p-4">
+                        <div class="font-kr text-sm mb-1" style="color:var(--korean-blue);">최고의 혈통</div>
+                        <div class="text-xs" style="color:var(--korean-blue-light);">Línea campeona internacional</div>
+                    </div>
+                    <div class="include-item rounded-lg p-4">
+                        <div class="font-kr text-sm mb-1" style="color:var(--korean-blue);">수입된 부모</div>
+                        <div class="text-xs" style="color:var(--korean-blue-light);">Padre y madre importados de Corea
+                        </div>
+                    </div>
+                    <div class="include-item rounded-lg p-4">
+                        <div class="font-kr text-sm mb-1" style="color:var(--korean-blue);">건강 보증</div>
+                        <div class="text-xs" style="color:var(--korean-blue-light);">Garantía de salud 1 año</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- CACHORROS -->
+    <section id="cachorros" class="py-28 px-6 md:px-14" style="background:#F4F8FC;">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-16 reveal">
+                <div class="font-kr font-light text-sm mb-3" style="color:var(--silver-dark);">현재 이용 가능한 강아지</div>
+                <h2 class="font-serif text-4xl md:text-5xl font-normal mb-4 shimmer-text">Cachorros disponibles</h2>
+                <div class="sep" style="max-width:220px;margin:0 auto;">
+                    <div class="sep-line flex-1"></div>
+                    <div class="sep-diamond"></div>
+                    <div class="sep-line flex-1"></div>
+                </div>
+                <p class="text-sm mt-4 max-w-md mx-auto" style="color:var(--korean-blue-light);">
+                    Pomeranias de línea coreana. Vacunas, desparasitación, microchip y pedigree FCI incluidos.
+                </p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8">
+
+                <div class="card rounded-xl overflow-hidden reveal">
+                    <div class="relative overflow-hidden h-64">
+                        <img src="assets/img4.jpeg"
+                            class="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
+                            style="filter:brightness(.9) saturate(.85);"
+                            onerror="this.src='https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=500'"
+                            alt="" />
+                        <div class="absolute top-3 right-3"><span class="badge-silver">Disponible</span></div>
+                        <div class="absolute bottom-3 left-3 font-kr text-xs" style="color:rgba(200,208,218,.45);">흰색 포메
+                        </div>
+                    </div>
+                    <div class="p-5">
+                        <div class="flex items-start justify-between mb-2">
+                            <div>
+                                <h3 class="font-serif text-xl" style="color:var(--silver-shine)">Pomerania Blanco</h3>
+                                <p class="text-xs tracking-wide uppercase mt-0.5" style="color:var(--silver-dark)">Macho
+                                    · 2 meses</p>
+                            </div>
+                            <div class="font-kr shimmer-text" style="font-size:1.4rem;font-weight:300;">S/. 1,800</div>
+                        </div>
+                        <p class="text-xs leading-relaxed mb-4" style="color:var(--silver-dark)">Pelaje blanco
+                            inmaculado, tipo fox coreano. Cabeza redonda, ojos grandes. Padres importados de Seoul.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="text-xs px-2 py-1 rounded-sm"
+                                style="background:rgba(200,208,218,.07);color:var(--silver-mid);border:1px solid rgba(200,208,218,.12);">🐾
+                                Pedigree</span>
+                            <span class="text-xs px-2 py-1 rounded-sm"
+                                style="background:rgba(200,208,218,.07);color:var(--silver-mid);border:1px solid rgba(200,208,218,.12);">💉
+                                Vacunas</span>
+                            <span class="text-xs px-2 py-1 rounded-sm"
+                                style="background:rgba(200,208,218,.07);color:var(--silver-mid);border:1px solid rgba(200,208,218,.12);">🏷️
+                                Microchip</span>
+                        </div>
+                        <a href="https://wa.me/51953631425?text=Me%20interesa%20el%20Pomerania%20Blanco" target="_blank"
+                            class="btn-silver w-full py-2.5 rounded-sm text-center block"><span>Consultar por
+                                WhatsApp</span></a>
+                    </div>
+                </div>
+
+                <div class="card rounded-xl overflow-hidden reveal relative"
+                    style="border-color:rgba(200,208,218,.3);transition-delay:.15s;">
+                    <div class="absolute top-0 left-0 right-0 h-0.5"
+                        style="background:linear-gradient(90deg,transparent,#C8D0DA,transparent);"></div>
+                    <div class="relative overflow-hidden h-64">
+                        <img src="assets/img5.jpeg"
+                            class="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
+                            style="filter:brightness(.88) saturate(.85);" onerror="this.src='assets/img6.jpeg'"
+                            alt="" />
+                        <div class="absolute top-3 right-3"><span class="badge-silver"
+                                style="background:linear-gradient(135deg,#8A9AB0,#5A6A80);">⭐ Popular</span></div>
+                        <div class="absolute bottom-3 left-3 font-kr text-xs" style="color:rgba(200,208,218,.45);">주황색
+                            포메</div>
+                    </div>
+                    <div class="p-5">
+                        <div class="flex items-start justify-between mb-2">
+                            <div>
+                                <h3 class="font-serif text-xl" style="color:var(--silver-shine)">Pomerania Naranja</h3>
+                                <p class="text-xs tracking-wide uppercase mt-0.5" style="color:var(--silver-dark)">
+                                    Hembra · 10 semanas</p>
+                            </div>
+                            <div class="font-kr shimmer-text" style="font-size:1.4rem;font-weight:300;">S/. 2,200</div>
+                        </div>
+                        <p class="text-xs leading-relaxed mb-4" style="color:var(--silver-dark)">Color naranja intenso
+                            de alta exhibición. Estructura coreana compacta. Última cachorra disponible de esta camada.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="text-xs px-2 py-1 rounded-sm"
+                                style="background:rgba(200,208,218,.07);color:var(--silver-mid);border:1px solid rgba(200,208,218,.12);">🐾
+                                Pedigree</span>
+                            <span class="text-xs px-2 py-1 rounded-sm"
+                                style="background:rgba(200,208,218,.07);color:var(--silver-mid);border:1px solid rgba(200,208,218,.12);">💉
+                                3 Vacunas</span>
+                            <span class="text-xs px-2 py-1 rounded-sm"
+                                style="background:rgba(200,208,218,.07);color:var(--silver-mid);border:1px solid rgba(200,208,218,.12);">🏷️
+                                Microchip</span>
+                        </div>
+                        <a href="https://wa.me/51953631425?text=Me%20interesa%20el%20Pomerania%20Naranja"
+                            target="_blank"
+                            class="btn-silver w-full py-2.5 rounded-sm text-center block"><span>Consultar por
+                                WhatsApp</span></a>
+                    </div>
+                </div>
+
+                <div class="card rounded-xl overflow-hidden reveal" style="transition-delay:.3s;">
+                    <div class="relative overflow-hidden h-64">
+                        <img src="assets/img7.jpeg"
+                            class="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
+                            style="filter:brightness(.88) saturate(.85);" onerror="this.src='assets/img8.jpeg'"
+                            alt="" />
+                        <div class="absolute top-3 right-3"><span class="badge-silver">Disponible</span></div>
+                        <div class="absolute bottom-3 left-3 font-kr text-xs" style="color:rgba(200,208,218,.45);">크림색
+                            포메</div>
+                    </div>
+                    <div class="p-5">
+                        <div class="flex items-start justify-between mb-2">
+                            <div>
+                                <h3 class="font-serif text-xl" style="color:var(--silver-shine)">Pomerania Crema</h3>
+                                <p class="text-xs tracking-wide uppercase mt-0.5" style="color:var(--silver-dark)">Macho
+                                    · 8 semanas</p>
+                            </div>
+                            <div class="font-kr shimmer-text" style="font-size:1.4rem;font-weight:300;">S/. 2,000</div>
+                        </div>
+                        <p class="text-xs leading-relaxed mb-4" style="color:var(--silver-dark)">Tono crema suave,
+                            fenotipo coreano auténtico. Carácter dulce y sociable. Criado en ambiente familiar.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="text-xs px-2 py-1 rounded-sm"
+                                style="background:rgba(200,208,218,.07);color:var(--silver-mid);border:1px solid rgba(200,208,218,.12);">🐾
+                                Pedigree</span>
+                            <span class="text-xs px-2 py-1 rounded-sm"
+                                style="background:rgba(200,208,218,.07);color:var(--silver-mid);border:1px solid rgba(200,208,218,.12);">💉
+                                Vacunas</span>
+                            <span class="text-xs px-2 py-1 rounded-sm"
+                                style="background:rgba(200,208,218,.07);color:var(--silver-mid);border:1px solid rgba(200,208,218,.12);">🏷️
+                                Microchip</span>
+                        </div>
+                        <a href="https://wa.me/51953631425?text=Me%20interesa%20el%20Pomerania%20Crema" target="_blank"
+                            class="btn-silver w-full py-2.5 rounded-sm text-center block"><span>Consultar por
+                                WhatsApp</span></a>
+                    </div>
+                </div>
+
+            </div>
+            <div class="text-center mt-10 reveal">
+                <p class="text-sm" style="color:var(--korean-blue-light);">¿Lista de espera? <a
+                        href="https://wa.me/51953631425" target="_blank" class="underline"
+                        style="color:var(--korean-blue)">Escríbenos →</a></p>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- QUÉ INCLUYE -->
+    <section class="py-24 px-6 md:px-14">
+        <div class="max-w-5xl mx-auto">
+            <div class="text-center mb-14 reveal">
+                <div class="font-kr font-light text-sm mb-3" style="color:var(--silver-dark);">포함된 항목</div>
+                <h2 class="font-serif text-4xl font-normal shimmer-text">¿Qué incluye tu cachorro?</h2>
+            </div>
+            <div class="grid md:grid-cols-3 gap-5">
+                <div class="include-item rounded-xl p-6 text-center reveal">
+                    <div class="text-3xl mb-3">💉</div>
+                    <div class="font-kr text-xs mb-1" style="color:var(--silver-dark);">예방 접종</div>
+                    <h3 class="font-serif text-lg mb-2" style="color:var(--silver-shine)">Vacunación completa</h3>
+                    <p class="text-xs leading-relaxed" style="color:var(--silver-dark)">Esquema al día: moquillo,
+                        parvovirus, hepatitis, leptospirosis y rabia.</p>
+                </div>
+                <div class="include-item rounded-xl p-6 text-center reveal" style="transition-delay:.12s">
+                    <div class="text-3xl mb-3">📋</div>
+                    <div class="font-kr text-xs mb-1" style="color:var(--silver-dark);">혈통서</div>
+                    <h3 class="font-serif text-lg mb-2" style="color:var(--silver-shine)">Pedigree FCI</h3>
+                    <p class="text-xs leading-relaxed" style="color:var(--silver-dark)">Certificado internacional con
+                        árbol genealógico coreano verificable.</p>
+                </div>
+                <div class="include-item rounded-xl p-6 text-center reveal" style="transition-delay:.24s">
+                    <div class="text-3xl mb-3">🏷️</div>
+                    <div class="font-kr text-xs mb-1" style="color:var(--silver-dark);">마이크로칩</div>
+                    <h3 class="font-serif text-lg mb-2" style="color:var(--silver-shine)">Microchip ISO</h3>
+                    <p class="text-xs leading-relaxed" style="color:var(--silver-dark)">Identificación permanente
+                        registrada nacional e internacional.</p>
+                </div>
+                <div class="include-item rounded-xl p-6 text-center reveal">
+                    <div class="text-3xl mb-3">🐛</div>
+                    <div class="font-kr text-xs mb-1" style="color:var(--silver-dark);">구충</div>
+                    <h3 class="font-serif text-lg mb-2" style="color:var(--silver-shine)">Desparasitado</h3>
+                    <p class="text-xs leading-relaxed" style="color:var(--silver-dark)">Interno y externo, con
+                        certificado de fechas y productos.</p>
+                </div>
+                <div class="include-item rounded-xl p-6 text-center reveal" style="transition-delay:.12s">
+                    <div class="text-3xl mb-3">🛁</div>
+                    <div class="font-kr text-xs mb-1" style="color:var(--silver-dark);">미용</div>
+                    <h3 class="font-serif text-lg mb-2" style="color:var(--silver-shine)">Grooming coreano</h3>
+                    <p class="text-xs leading-relaxed" style="color:var(--silver-dark)">Llega limpio, perfumado y con
+                        primer corte estilo teddy coreano.</p>
+                </div>
+                <div class="include-item rounded-xl p-6 text-center reveal" style="transition-delay:.24s">
+                    <div class="text-3xl mb-3">📞</div>
+                    <div class="font-kr text-xs mb-1" style="color:var(--silver-dark);">사후 지원</div>
+                    <h3 class="font-serif text-lg mb-2" style="color:var(--silver-shine)">Soporte vitalicio</h3>
+                    <p class="text-xs leading-relaxed" style="color:var(--silver-dark)">Asesoría permanente por
+                        WhatsApp. Siempre disponibles para ti.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- GALERÍA -->
+    <section id="galeria" class="py-24 px-6 md:px-14" style="background:#F0F5FA;">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-12 reveal">
+                <div class="font-kr font-light text-sm mb-2" style="color:var(--silver-dark);">갤러리</div>
+                <h2 class="font-serif text-4xl font-normal shimmer-text">Galería</h2>
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-3 reveal">
+                <div class="col-span-2 rounded-xl overflow-hidden h-64 md:h-80">
+                    <img src="assets/img1.jpeg"
+                        class="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
+                        style="filter:brightness(.85) saturate(.8);"
+                        onerror="this.src='https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=700'"
+                        alt="" />
+                </div>
+                <div class="rounded-xl overflow-hidden h-36 md:h-auto">
+                    <img src="assets/img2.jpeg"
+                        class="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
+                        style="filter:brightness(.85) saturate(.8);"
+                        onerror="this.src='https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=400'"
+                        alt="" />
+                </div>
+                <div class="rounded-xl overflow-hidden h-36 md:h-auto">
+                    <img src="assets/img3.jpeg"
+                        class="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
+                        style="filter:brightness(.85) saturate(.8);" alt="" />
+                </div>
+                <div class="rounded-xl overflow-hidden h-36 md:h-auto">
+                    <img src="assets/img4.jpeg"
+                        class="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
+                        style="filter:brightness(.85) saturate(.8);"
+                        onerror="this.src='https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=400'"
+                        alt="" />
+                </div>
+                <div class="rounded-xl overflow-hidden h-36 md:h-auto">
+                    <img src="assets/img5.jpeg"
+                        class="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
+                        style="filter:brightness(.85) saturate(.8);" alt="" />
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- TESTIMONIOS -->
+    <section class="py-24 px-6 md:px-14">
+        <div class="max-w-5xl mx-auto">
+            <div class="text-center mb-14 reveal">
+                <div class="font-kr font-light text-sm mb-2" style="color:var(--silver-dark);">고객 후기</div>
+                <h2 class="font-serif text-4xl font-normal shimmer-text">Lo que dicen nuestras familias</h2>
+            </div>
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="testi rounded-lg p-6 reveal">
+                    <div class="text-sm mb-3" style="color:var(--korean-blue);">★★★★★</div>
+                    <p class="text-sm leading-relaxed mb-5 font-serif italic" style="color:var(--korean-blue-light)">"El
+                        fenotipo coreano es exactamente lo que buscaba — ojos grandes, cara de muñeca. Llegó con toda la
+                        documentación. ¡Increíble criadero!"</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold shimmer-text"
+                            style="background:rgba(200,208,218,.1);border:1px solid rgba(200,208,218,.2)">V</div>
+                        <div>
+                            <div class="text-sm" style="color:var(--silver)">Valeria M.</div>
+                            <div class="text-xs" style="color:var(--silver-dark)">San Isidro, Lima</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testi rounded-lg p-6 reveal" style="transition-delay:.15s">
+                    <div class="text-sm mb-3" style="color:var(--korean-blue);">★★★★★</div>
+                    <p class="text-sm leading-relaxed mb-5 font-serif italic" style="color:var(--korean-blue-light)">
+                        "Llevamos
+                        2 años con nuestro Pomerania de línea coreana. Salud perfecta, pedigree impecable. White Royal
+                        King es el mejor criadero del país."</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold shimmer-text"
+                            style="background:rgba(200,208,218,.1);border:1px solid rgba(200,208,218,.2)">C</div>
+                        <div>
+                            <div class="text-sm" style="color:var(--silver)">Carlos R.</div>
+                            <div class="text-xs" style="color:var(--silver-dark)">Miraflores, Lima</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testi rounded-lg p-6 reveal" style="transition-delay:.3s">
+                    <div class="text-sm mb-3" style="color:var(--korean-blue);">★★★★★</div>
+                    <p class="text-sm leading-relaxed mb-5 font-serif italic" style="color:var(--korean-blue-light)">"Me
+                        enviaron hasta Arequipa sin problema. Llegó tranquila y sana. La atención post-venta es
+                        excepcional. ¡Quiero otro!"</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold shimmer-text"
+                            style="background:rgba(200,208,218,.1);border:1px solid rgba(200,208,218,.2)">L</div>
+                        <div>
+                            <div class="text-sm" style="color:var(--silver)">Luciana P.</div>
+                            <div class="text-xs" style="color:var(--silver-dark)">Arequipa</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- CTA FINAL -->
+    <section class="py-28 px-6 md:px-14 relative overflow-hidden"
+        style="background:linear-gradient(165deg,#FFFFFF,#F4F8FC,#E8EDF4);">
+        <div class="hangul-bg" style="font-size:400px;top:50%;left:50%;transform:translate(-50%,-50%);">왕</div>
+        <div class="geo-deco" style="width:200px;height:200px;top:10%;right:8%;transform:rotate(20deg);"></div>
+        <div class="geo-deco" style="width:100px;height:100px;bottom:10%;left:5%;transform:rotate(-10deg);"></div>
+        <div class="max-w-2xl mx-auto text-center relative z-10">
+            <div class="font-kr font-light text-sm mb-4" style="color:var(--silver-dark);">당신의 완벽한 동반자를 찾으세요</div>
+            <h2 class="font-serif text-5xl font-normal mb-6 shimmer-text">Tu compañero<br /><em>ideal te espera.</em>
+            </h2>
+            <p class="text-sm leading-relaxed mb-10 max-w-md mx-auto" style="color:var(--korean-blue-light)">
+                Contáctanos hoy y te ayudamos a elegir el Pomerania de origen coreano perfecto para tu familia.
+                Disponibilidad limitada.
+            </p>
+            <div class="flex flex-wrap gap-4 justify-center">
+                <a href="https://wa.me/51953631425" target="_blank"
+                    class="btn-silver px-10 py-4 rounded-sm inline-flex items-center gap-2">
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="#0D1117">
+                        <path
+                            d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+                    </svg>
+                    <span>Escríbenos ahora</span>
+                </a>
+                <a href="tel:+51953631425" class="btn-outline px-8 py-4 rounded-sm inline-block">📞 Llamar</a>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- CONTACTO -->
+    <section id="contacto" class="py-14 px-6 md:px-14"
+        style="background:#F4F8FC;border-top:1px solid rgba(0,52,120,.1);">
+        <div class="max-w-5xl mx-auto grid md:grid-cols-3 gap-8 text-center">
+            <div>
+                <div class="font-kr text-xs mb-2" style="color:var(--korean-blue-light)">위치</div>
+                <div class="text-2xl mb-2">📍</div>
+                <div class="text-xs tracking-widest uppercase mb-1" style="color:var(--korean-blue)">Ubicación</div>
+                <p class="text-xs" style="color:var(--korean-blue-light)">Lima, Perú · Visitas con cita previa</p>
+            </div>
+            <div>
+                <div class="font-kr text-xs mb-2" style="color:var(--korean-blue-light)">연락처</div>
+                <div class="text-2xl mb-2">📱</div>
+                <div class="text-xs tracking-widest uppercase mb-1" style="color:var(--korean-blue)">WhatsApp</div>
+                <a href="https://wa.me/51953631425" target="_blank" class="text-xs underline"
+                    style="color:var(--korean-blue)">+51 953 631 425</a>
+                <p class="text-xs mt-1" style="color:var(--korean-blue-light)">Lun–Dom 9am–7pm</p>
+            </div>
+            <div>
+                <div class="font-kr text-xs mb-2" style="color:var(--korean-blue-light)">인스타그램</div>
+                <div class="text-2xl mb-2">📸</div>
+                <div class="text-xs tracking-widest uppercase mb-1" style="color:var(--korean-blue)">Instagram</div>
+                <a href="https://instagram.com" target="_blank" class="text-xs underline"
+                    style="color:var(--korean-blue)">@whiteroyalking</a>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- FOOTER -->
+    <footer style="background:#003478;" class="py-10 px-6 text-center">
+        <div class="font-kr font-light text-xl mb-1 shimmer-text" style="color:#FFFFFF;">WHITE ROYAL KING</div>
+        <div class="font-kr text-xs mb-4" style="color:rgba(255,255,255,.7);letter-spacing:.15em;">화이트 로열 킹 · Lima, Perú
+        </div>
+        <p class="text-xs" style="color:rgba(255,255,255,.5)">© 2025 White Royal King. Todos los derechos reservados.
+        </p>
+    </footer>
+
+    <script>
+        const obs = new IntersectionObserver(entries => {
+            entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('revealed'); });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+    </script>
+</body>
+
+</html>
